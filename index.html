@@ -1,10 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Teste</title>
+    <meta charset="UTF-8">
+    <title>Gerador de Cenários para Festas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            background: #ffffff;
+            margin: 20px auto;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 4px;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-bottom: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #005fcc;
+        }
+
+        .resultado {
+            margin-top: 22px;
+            padding: 16px;
+            background: #e8f0fe;
+            border-left: 5px solid #007bff;
+            border-radius: 8px;
+        }
+    </style>
 </head>
+
 <body>
-  <h1>O site está funcionando! 🎉</h1>
+
+<div class="container">
+    <h1>Gerador de Cenários para Festas</h1>
+
+    <label>Tema da festa:</label>
+    <select id="tema">
+        <option>Festa Infantil</option>
+        <option>Casamento</option>
+        <option>Aniversário Adulto</option>
+        <option>Chá Revelação</option>
+        <option>Formatura</option>
+    </select>
+
+    <label>Paleta de cores:</label>
+    <input id="cores" placeholder="Ex.: azul, branco, dourado">
+
+    <label>Descrição geral do cenário:</label>
+    <textarea id="descricao" rows="4" placeholder="Ex.: Mesa central com bolo, painel de fundo, balões..."></textarea>
+
+    <button onclick="gerar()">Gerar Cenário</button>
+
+    <div class="resultado" id="resultado" style="display:none;"></div>
+
+</div>
+
+<script>
+function gerar() {
+    const tema = document.getElementById("tema").value;
+    const cores = document.getElementById("cores").value;
+    const descricao = document.getElementById("descricao").value;
+
+    let texto = `
+        <strong>Tema escolhido:</strong> ${tema}<br><br>
+        <strong>Paleta de cores:</strong> ${cores}<br><br>
+        <strong>Cenário sugerido:</strong><br>
+        ${descricao}
+    `;
+
+    document.getElementById("resultado").style.display = "block";
+    document.getElementById("resultado").innerHTML = texto;
+}
+</script>
+
 </body>
 </html>

@@ -2,140 +2,735 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
   <title>Gerador de Cenários para Festas</title>
 
+  <!-- Estilo geral -->
   <style>
+    :root {
+      --primary: #2f80ed;
+      --primary-dark: #1c5bb0;
+      --accent: #27ae60;
+      --bg: #f4f6fb;
+      --card-bg: #ffffff;
+      --text: #222222;
+      --muted: #666666;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
       margin: 0;
-      padding: 20px;
+      padding: 24px 12px 40px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+      background: radial-gradient(circle at top, #e3f2ff 0, #f4f6fb 60%, #f4f6fb 100%);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 1024px;
+      margin: 0 auto;
+    }
+
+    .header {
       text-align: center;
+      margin-bottom: 24px;
     }
 
-    h1 {
-      font-size: 28px;
-      color: #222;
+    .header h1 {
+      margin: 0;
+      font-size: clamp(24px, 4vw, 32px);
     }
 
-    .container {
-      max-width: 850px;
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-      margin: 20px auto;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      text-align: left;
+    .header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .badges {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(47, 128, 237, 0.08);
+      color: var(--primary-dark);
+      border: 1px solid rgba(47, 128, 237, 0.15);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 820px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 20px 18px;
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 18px;
     }
 
     label {
-      font-weight: bold;
-      margin-top: 15px;
       display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
     }
 
-    select, input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border-radius: 8px;
-      border: 1px solid #bbb;
-      font-size: 16px;
+    .field {
+      margin-bottom: 14px;
     }
 
-    button {
+    .field small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    select,
+    input,
+    textarea {
       width: 100%;
-      background: #4CAF50;
-      color: white;
-      padding: 14px;
+      padding: 10px 11px;
+      border-radius: var(--radius-md);
+      border: 1px solid #d3d7e0;
+      font-size: 14px;
+      outline: none;
+      background: #fafbff;
+      transition: border 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 2px rgba(47, 128, 237, 0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .row > .field {
+      flex: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 999px;
       border: none;
-      border-radius: 10px;
-      margin-top: 20px;
-      font-size: 18px;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s, background 0.15s;
+      white-space: nowrap;
     }
 
-    button:hover {
-      background: #43a047;
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      width: 100%;
+      margin-top: 6px;
+      box-shadow: 0 8px 18px rgba(39, 174, 96, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(39, 174, 96, 0.3);
+      background: #219150;
+    }
+
+    .btn-outline {
+      background: #f7f8ff;
+      color: var(--primary-dark);
+      border: 1px solid rgba(47, 128, 237, 0.35);
+    }
+
+    .btn-outline:hover {
+      background: #e7efff;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px dashed #ccd2e0;
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      background: #f5f6fb;
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
     }
 
     .resultado {
-      margin-top: 25px;
-      padding: 20px;
-      background: #eef6ff;
-      border-left: 5px solid #4A90E2;
-      border-radius: 10px;
+      border-radius: var(--radius-md);
+      background: #f2f6ff;
+      padding: 14px 16px;
+      border-left: 4px solid var(--primary);
+      font-size: 14px;
+      line-height: 1.5;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+
+    .resultado p {
+      margin: 4px 0;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #e3ebff;
+      color: var(--primary-dark);
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+
+    .prompt-box {
+      font-size: 13px;
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      margin-top: 8px;
+      max-height: 220px;
+      overflow-y: auto;
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+        Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .prompt-box strong {
+      color: #fbbf24;
+    }
+
+    .divider {
+      margin: 12px 0;
+      border-top: 1px dashed #dde0ec;
+    }
+
+    .saved-list {
+      max-height: 220px;
+      overflow-y: auto;
+      font-size: 13px;
+    }
+
+    .saved-item {
+      padding: 8px 10px;
+      border-radius: 9px;
+      background: #f7f8ff;
+      margin-bottom: 8px;
+      border: 1px solid #e0e4f2;
+    }
+
+    .saved-item-title {
+      font-weight: 600;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.07);
+      color: #0f766e;
+      font-size: 11px;
+    }
+
+    .top-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .login-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .login-box input {
+      width: 70px;
+      padding: 4px 6px;
+      font-size: 11px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+      background: #f97316;
+    }
+
+    .status-dot.on {
+      background: #22c55e;
     }
   </style>
 </head>
 
 <body>
+  <div class="app">
+    <div class="header">
+      <h1>🎉 Gerador de Cenários para Festas</h1>
+      <p>Monte rapidamente ideias e descrições de cenários para encantar seus clientes.</p>
+      <div class="badges">
+        <span class="badge">Pronto para celular</span>
+        <span class="badge">Geração de texto + PDF</span>
+        <span class="badge">Modo Decorador com PIN</span>
+      </div>
+    </div>
 
-  <h1>🎉 Gerador de Cenários para Festas</h1>
-  <p>Monte rapidamente ideias e descrições de cenários para eventos.</p>
+    <div class="top-toolbar card" style="margin-bottom: 18px;">
+      <div class="login-box">
+        <span id="status-dot" class="status-dot"></span>
+        <span id="status-text">Modo básico</span>
+      </div>
+      <div class="login-box">
+        <span>PIN do Decorador:</span>
+        <input type="password" id="pin-input" placeholder="••••" />
+        <button class="btn btn-sm btn-outline" onclick="ativarDecorador()">Entrar</button>
+      </div>
+    </div>
 
-  <div class="container">
-    <label>Tema da Festa</label>
-    <select id="tema">
-      <option>Aniversário</option>
-      <option>Casamento</option>
-      <option>Chá Revelação</option>
-      <option>Festa Infantil</option>
-      <option>15 Anos</option>
-      <option>Corporativo</option>
-    </select>
+    <div class="grid">
+      <!-- COLUNA ESQUERDA: FORM -->
+      <div class="card">
+        <h2>Informações da Festa</h2>
 
-    <label>Estilo</label>
-    <select id="estilo">
-      <option>Luxo</option>
-      <option>Simples</option>
-      <option>Rústico</option>
-      <option>Moderno</option>
-      <option>Clean</option>
-      <option>Temático</option>
-    </select>
+        <div class="field">
+          <label>Tema da Festa</label>
+          <select id="tema">
+            <option>Aniversário Infantil</option>
+            <option>Aniversário Adulto</option>
+            <option>Casamento</option>
+            <option>Chá Revelação</option>
+            <option>Chá de Bebê</option>
+            <option>15 Anos</option>
+            <option>Formatura</option>
+            <option>Corporativo</option>
+          </select>
+        </div>
 
-    <label>Cores Principais</label>
-    <input type="text" id="cores" placeholder="Ex.: Dourado, Branco, Azul Tiffany" />
+        <div class="row">
+          <div class="field">
+            <label>Estilo</label>
+            <select id="estilo">
+              <option>Luxo</option>
+              <option>Simples</option>
+              <option>Rústico</option>
+              <option>Moderno</option>
+              <option>Clean</option>
+              <option>Temático</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Tamanho do Espaço</label>
+            <select id="espaco">
+              <option>Pequeno</option>
+              <option>Médio</option>
+              <option>Grande</option>
+            </select>
+          </div>
+        </div>
 
-    <label>Detalhes Extras</label>
-    <textarea id="extras" rows="3" placeholder="Ex.: Balões metálicos, painel 3D, iluminação LED..."></textarea>
+        <div class="field">
+          <label>Cores Principais</label>
+          <input
+            type="text"
+            id="cores"
+            placeholder="Ex.: Dourado, Branco, Azul Tiffany"
+          />
+          <small>Dica: escreva 2 a 4 cores que combinam com o tema.</small>
+        </div>
 
-    <button onclick="gerar()">Gerar Cenário</button>
+        <div class="field">
+          <label>Detalhes Extras</label>
+          <textarea
+            id="extras"
+            rows="3"
+            placeholder="Ex.: Balões orgânicos, painel ripado, tapete de grama, iluminação LED..."
+          ></textarea>
+        </div>
 
-    <div id="resultado" class="resultado" style="display:none;"></div>
+        <div class="row">
+          <div class="field">
+            <label>Orçamento Estimado (R$)</label>
+            <input
+              type="number"
+              id="orcamento"
+              placeholder="Ex.: 1500"
+              min="0"
+            />
+            <small>Campo usado apenas no modo decorador.</small>
+          </div>
+          <div class="field">
+            <label>Nível de Impacto</label>
+            <select id="impacto">
+              <option>Clássico</option>
+              <option>Chamativo</option>
+              <option>Instagramável</option>
+              <option>Super Premium</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="gerarCenario()">
+          Gerar Cenário
+        </button>
+
+        <div class="btn-row">
+          <button class="btn btn-outline btn-sm" onclick="copiarDescricao()">
+            📋 Copiar descrição
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="baixarPDF()">
+            📄 Baixar PDF
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="salvarCenario()">
+            💾 Salvar cenário
+          </button>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA: RESULTADO + PROMPT IA + SALVOS -->
+      <div class="card">
+        <h2>Resultado & Ferramentas</h2>
+
+        <div class="field">
+          <label>Descrição do Cenário</label>
+          <div id="resultado" class="resultado">
+            <p>
+              Preencha os campos ao lado e clique em
+              <strong>“Gerar Cenário”</strong> para ver aqui a descrição pronta.
+            </p>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <label>Prompt para IA (imagem)</label>
+          <small>
+            Use esse texto em ferramentas como Midjourney, DALL-E, Leonardo etc.
+          </small>
+          <div id="prompt-ia" class="prompt-box">
+            <strong>Prompt:</strong> será gerado automaticamente após você criar
+            o cenário.
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost btn-sm" onclick="copiarPrompt()">
+              🎨 Copiar prompt de IA
+            </button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field">
+          <div class="top-toolbar" style="margin-bottom: 6px;">
+            <span class="pill">Cenários salvos (localmente)</span>
+            <button class="btn btn-ghost btn-sm" onclick="limparSalvos()">
+              🗑 Limpar tudo
+            </button>
+          </div>
+          <div id="lista-salvos" class="saved-list">
+            <p style="font-size: 13px; color: var(--muted);">
+              Nenhum cenário salvo ainda. Gere um cenário e clique em
+              <strong>“Salvar cenário”</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!-- jsPDF para exportar PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-vqN7BqXcwxLBzME2YkdE+5EYXPLkZX31lrT7xvFeoJEBhDigw1VE3DybZ0SqnX+ANXoy2cuglRez2oJ6I9R3rQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <script>
-    function gerar() {
-      const tema = document.getElementById("tema").value;
-      const estilo = document.getElementById("estilo").value;
-      const cores = document.getElementById("cores").value;
-      const extras = document.getElementById("extras").value;
+    const PIN_DECORADOR = "2024"; // você pode trocar esse PIN
 
-      let texto = `
-        <h2>✨ Cenário Gerado</h2>
-        <p><strong>Tema:</strong> ${tema}</p>
-        <p><strong>Estilo:</strong> ${estilo}</p>
-        <p><strong>Cores principais:</strong> ${cores || "Não informado"}</p>
-        <p><strong>Detalhes extras:</strong> ${extras || "Nenhum"}</p>
-        <br>
-        <p><strong>Descrição sugerida:</strong></p>
-        <p>
-          Para uma festa de <strong>${tema}</strong> no estilo <strong>${estilo}</strong>,
-          utilize uma paleta com <strong>${cores || "as cores escolhidas"}</strong>.
-          Combine elementos decorativos harmoniosos, criando uma ambientação
-          envolvente e personalizada.
-          ${extras ? " Inclua também: <em>" + extras + "</em>." : ""}
-        </p>
-      `;
+    let ultimoTexto = "";
+    let ultimoPrompt = "";
 
-      const res = document.getElementById("resultado");
-      res.innerHTML = texto;
-      res.style.display = "block";
+    function coletarDados() {
+      return {
+        tema: document.getElementById("tema").value,
+        estilo: document.getElementById("estilo").value,
+        espaco: document.getElementById("espaco").value,
+        cores: document.getElementById("cores").value.trim(),
+        extras: document.getElementById("extras").value.trim(),
+        orcamento: document.getElementById("orcamento").value.trim(),
+        impacto: document.getElementById("impacto").value
+      };
     }
-  </script>
 
+    function gerarCenario() {
+      const d = coletarDados();
+
+      let partes = [];
+
+      partes.push(
+        `Cenário para ${d.tema.toLowerCase()} em estilo ${d.estilo.toLowerCase()}, pensado para um espaço ${d.espaco.toLowerCase()}.`
+      );
+
+      if (d.cores) {
+        partes.push(
+          `A paleta de cores principal trabalha com ${d.cores}, criando uma composição harmônica e fotogênica.`
+        );
+      } else {
+        partes.push(
+          `As cores são trabalhadas de forma equilibrada, mantendo o visual coerente com o tema.`
+        );
+      }
+
+      if (d.impacto === "Instagramável") {
+        partes.push(
+          `O foco é criar pontos “instagramáveis”, perfeitos para fotos, com elementos de destaque posicionados em diferentes alturas.`
+        );
+      } else if (d.impacto === "Super Premium") {
+        partes.push(
+          `Todos os detalhes são pensados em nível premium, com acabamento refinado, materiais de alta qualidade e presença forte na entrada.`
+        );
+      } else if (d.impacto === "Chamativo") {
+        partes.push(
+          `O cenário é mais ousado, com bastante volume de balões, elementos grandes e um visual que chama atenção imediatamente.`
+        );
+      } else {
+        partes.push(
+          `O cenário mantém um equilíbrio entre elegância e conforto visual, sem exageros.`
+        );
+      }
+
+      if (d.extras) {
+        partes.push(`Elementos extras: ${d.extras}.`);
+      }
+
+      if (d.orcamento) {
+        partes.push(
+          `O projeto foi pensado para um orçamento aproximado de R$ ${Number(
+            d.orcamento
+          ).toLocaleString("pt-BR")}, podendo ser ajustado conforme necessidades específicas do cliente.`
+        );
+      }
+
+      const texto =
+        `<p><span class="tag">${d.tema}</span> <span class="tag">${d.estilo}</span> <span class="tag">${d.impacto}</span> <span class="tag">Espaço ${d.espaco}</span></p>` +
+        `<p>${partes.join(" ")}</p>`;
+
+      ultimoTexto = partes.join(" ");
+      document.getElementById("resultado").innerHTML = texto;
+
+      gerarPromptIA(d);
+      atualizarListaSalvos();
+    }
+
+    function gerarPromptIA(dados) {
+      const base = `a highly detailed event decoration for a ${dados.tema.toLowerCase()} party, in ${dados.estilo.toLowerCase()} style, ${dados.espaco.toLowerCase()} venue${
+        dados.cores
+          ? ", color palette: " + dados.cores.toLowerCase()
+          : ""
+      }${
+        dados.extras
+          ? ", elements: " + dados.extras.toLowerCase()
+          : ""
+      }, cinematic lighting, professional photography, 4k, ultra realistic`;
+
+      ultimoPrompt = base;
+
+      const box = document.getElementById("prompt-ia");
+      box.innerHTML = `<strong>Prompt:</strong> ${base}`;
+    }
+
+    function copiarDescricao() {
+      if (!ultimoTexto) {
+        alert("Gere um cenário primeiro.");
+        return;
+      }
+      navigator.clipboard
+        .writeText(ultimoTexto)
+        .then(() => alert("Descrição copiada!"))
+        .catch(() => alert("Não foi possível copiar automaticamente."));
+    }
+
+    function copiarPrompt() {
+      if (!ultimoPrompt) {
+        alert("Gere um cenário primeiro para criar o prompt.");
+        return;
+      }
+      navigator.clipboard
+        .writeText(ultimoPrompt)
+        .then(() => alert("Prompt de IA copiado!"))
+        .catch(() =>
+          alert("Não foi possível copiar automaticamente o prompt.")
+        );
+    }
+
+    async function baixarPDF() {
+      if (!ultimoTexto) {
+        alert("Gere um cenário antes de baixar o PDF.");
+        return;
+      }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      doc.text("Cenário de Festa", 14, 20);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+
+      const marginLeft = 14;
+      const marginTop = 32;
+      const maxWidth = 180;
+
+      const linhas = doc.splitTextToSize(ultimoTexto, maxWidth);
+      doc.text(linhas, marginLeft, marginTop);
+
+      doc.save("cenario-festa.pdf");
+    }
+
+    function salvarCenario() {
+      if (!ultimoTexto) {
+        alert("Gere um cenário antes de salvar.");
+        return;
+      }
+      const dados = coletarDados();
+
+      const item = {
+        id: Date.now(),
+        titulo: `${dados.tema} - ${dados.estilo}`,
+        impacto: dados.impacto,
+        espaco: dados.espaco,
+        texto: ultimoTexto
+      };
+
+      const atuais = carregarSalvos();
+      atuais.unshift(item);
+      localStorage.setItem("cenarios_festa", JSON.stringify(atuais));
+      atualizarListaSalvos();
+      alert("Cenário salvo neste dispositivo.");
+    }
+
+    function carregarSalvos() {
+      try {
+        const raw = localStorage.getItem("cenarios_festa");
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function atualizarListaSalvos() {
+      const lista = document.getElementById("lista-salvos");
+      const itens = carregarSalvos();
+
+      if (!itens.length) {
+        lista.innerHTML =
+          '<p style="font-size:13px;color:var(--muted);">Nenhum cenário salvo ainda.</p>';
+        return;
+      }
+
+      lista.innerHTML = "";
+      itens.forEach((c) => {
+        const div = document.createElement("div");
+        div.className = "saved-item";
+        div.innerHTML = `
+          <div class="saved-item-title">${c.titulo}</div>
+          <div style="margin-bottom:4px;">
+            <span class="tag">${c.impacto}</span>
+            <span class="tag">Espaço ${c.espaco}</span>
+          </div>
+          <p style="margin:0;font-size:12px;color:#444;">${c.texto}</p>
+        `;
+        lista.appendChild(div);
+      });
+    }
+
+    function limparSalvos() {
+      if (!confirm("Tem certeza que deseja apagar todos os cenários salvos?")) {
+        return;
+      }
+      localStorage.removeItem("cenarios_festa");
+      atualizarListaSalvos();
+    }
+
+    function ativarDecorador() {
+      const pin = document.getElementById("pin-input").value.trim();
+      if (pin === PIN_DECORADOR) {
+        document.getElementById("status-dot").classList.add("on");
+        document.getElementById("status-text").textContent =
+          "Modo decorador ativo";
+        alert("Modo decorador ativado! Campos avançados liberados.");
+      } else {
+        alert("PIN incorreto.");
+      }
+    }
+
+    // inicializa lista de salvos
+    atualizarListaSalvos();
+  </script>
 </body>
 </html>

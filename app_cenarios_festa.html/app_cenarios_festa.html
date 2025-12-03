@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gerador de Cenários para Festas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    h1, h2 {
+      margin-top: 0;
+      color: #1a2c42;
+    }
+    .subtitle {
+      color: #555;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+      color: #222;
+    }
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      border-radius: 8px;
+      border: 1px solid #d0d5dd;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    textarea {
+      min-height: 60px;
+    }
+    .row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .col {
+      flex: 1;
+      min-width: 220px;
+    }
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      margin-bottom: 14px;
+    }
+    .checkbox-group label {
+      font-weight: 500;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 24px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .btn-primary {
+      background: #1a2c42;
+      color: #fff;
+    }
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .result {
+      margin-top: 24px;
+      padding: 16px 18px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      white-space: pre-wrap;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #075985;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .footer-info {
+      margin-top: 16px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Gerador de Cenários para Festas</h1>
+    <p class="subtitle">
+      Preencha os dados do evento e gere um cenário completo de decoração
+      para enviar ao cliente no WhatsApp.
+    </p>
+
+    <h2>1. Dados do evento</h2>
+    <div class="row">
+      <div class="col">
+        <label for="tipoEvento">Tipo de evento</label>
+        <select id="tipoEvento">
+          <option value="Aniversário infantil">Aniversário infantil</option>
+          <option value="Aniversário adulto">Aniversário adulto</option>
+          <option value="Chá revelação">Chá revelação</option>
+          <option value="Chá de bebê">Chá de bebê</option>
+          <option value="Casamento">Casamento</option>
+          <option value="Noivado">Noivado</option>
+          <option value="Formatura">Formatura</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="idade">Idade / foco do evento</label>
+        <input type="text" id="idade" placeholder="Ex.: 1 ano, 15 anos, casamento, etc." />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="homenageado">Nome do(a) homenageado(a)</label>
+        <input type="text" id="homenageado" placeholder="Ex.: Laura, Miguel, Casal Ana & João" />
+      </div>
+      <div class="col">
+        <label for="qtdConvidados">Quantidade de convidados</label>
+        <input type="number" id="qtdConvidados" placeholder="Ex.: 50" />
+      </div>
+    </div>
+
+    <label for="local">Local do evento</label>
+    <input type="text" id="local" placeholder="Ex.: Salão de festas, área externa, sítio, etc." />
+
+    <h2>2. Estilo da decoração</h2>
+    <label for="tema">Tema (se o cliente já tiver)</label>
+    <input type="text" id="tema" placeholder="Ex.: Safari, Princesas, Boteco, Neon, Clássico branco e dourado" />
+
+    <label for="cores">Paleta de cores desejada</label>
+    <input type="text" id="cores" placeholder="Ex.: Rosa claro, dourado e branco" />
+
+    <div class="row">
+      <div class="col">
+        <label for="estilo">Estilo</label>
+        <select id="estilo">
+          <option value="simples">Simples / econômico</option>
+          <option value="intermediario">Intermediário</option>
+          <option value="luxo">Luxo / completo</option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="orcamento">Faixa de orçamento aproximada (R$)</label>
+        <select id="orcamento">
+          <option value="baixo">Até R$ 1.000</option>
+          <option value="medio">R$ 1.000 a R$ 3.000</option>
+          <option value="alto">Acima de R$ 3.000</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="observacoes">Preferências do cliente / observações</label>
+    <textarea id="observacoes" placeholder="Ex.: Não gosta de balão metalizado, quer algo bem delicado, etc."></textarea>
+
+    <h2>3. Itens desejados</h2>
+    <div class="checkbox-group">
+      <label><input type="checkbox" class="item" value="Painel principal decorado" checked /> Painel principal</label>
+      <label><input type="checkbox" class="item" value="Mesa do bolo decorada" checked /> Mesa do bolo</label>
+      <label><input type="checkbox" class="item" value="Arranjos nas mesas dos convidados" /> Mesas dos convidados</label>
+      <label><input type="checkbox" class="item" value="Arco orgânico de balões" /> Arco/coluna de balões</label>
+      <label><input type="checkbox" class="item" value="Tapete ou passarela para o cenário" /> Tapete/passarela</label>
+      <label><input type="checkbox" class="item" value="Lembrancinhas personalizadas" /> Lembrancinhas</label>
+      <label><input type="checkbox" class="item" value="Bandejas, suportes e aparadores personalizados" /> Bandejas/suportes</label>
+      <label><input type="checkbox" class="item" value="Iluminação cênica e pontos de luz" /> Iluminação</label>
+      <label><input type="checkbox" class="item" value="Flores naturais ou arranjos premium" /> Flores naturais</label>
+    </div>
+
+    <button class="btn-primary" onclick="gerarCenario()">Gerar cenário</button>
+    <button class="btn-secondary" onclick="copiarResultado()">Copiar texto</button>
+
+    <div id="resultado" class="result" style="display:none;"></div>
+
+    <p class="footer-info">
+      Dica: você pode tirar print ou copiar o texto gerado e enviar direto para o cliente
+      pelo WhatsApp como proposta inicial.
+    </p>
+  </div>
+
+  <script>
+    function gerarCenario() {
+      const tipoEvento = document.getElementById('tipoEvento').value;
+      const idade = document.getElementById('idade').value.trim();
+      const homenageado = document.getElementById('homenageado').value.trim();
+      const qtdConvidados = document.getElementById('qtdConvidados').value;
+      const local = document.getElementById('local').value.trim();
+      const tema = document.getElementById('tema').value.trim();
+      const cores = document.getElementById('cores').value.trim();
+      const estilo = document.getElementById('estilo').value;
+      const orcamento = document.getElementById('orcamento').value;
+      const observacoes = document.getElementById('observacoes').value.trim();
+
+      const itensMarcados = Array.from(document.querySelectorAll('.item:checked'))
+        .map(i => i.value);
+
+      let estiloTexto = '';
+      if (estilo === 'simples') {
+        estiloTexto = 'proposta com foco em um cenário bonito, porém enxuto e econômico, mantendo um acabamento caprichado.';
+      } else if (estilo === 'intermediario') {
+        estiloTexto = 'proposta equilibrada, com cenário completo, boa presença visual e detalhes personalizados.';
+      } else {
+        estiloTexto = 'proposta de cenário mais completo, com foco em impacto visual, riqueza de detalhes e acabamento de alto padrão.';
+      }
+
+      let orcamentoTexto = '';
+      if (orcamento === 'baixo') {
+        orcamentoTexto = 'faixa mais econômica, otimizando materiais e focando em pontos de destaque para caber no orçamento.';
+      } else if (orcamento === 'medio') {
+        orcamentoTexto = 'faixa intermediária, permitindo trabalhar bem o cenário, personalização e alguns detalhes extras.';
+      } else {
+        orcamentoTexto = 'faixa mais alta, possibilitando cenário bem completo, com flores, iluminação e itens exclusivos.';
+      }
+
+      const temaTexto = tema
+        ? `Tema sugerido/solicitado: ${tema}.`
+        : 'Tema ainda em aberto — posso sugerir algumas opções de acordo com o perfil do evento.';
+
+      const coresTexto = cores
+        ? `Paleta de cores desejada: ${cores}.`
+        : 'Paleta de cores ainda em aberto — posso enviar sugestões de combinações que fiquem harmônicas no cenário.';
+
+      const nomeEvento =
+        (homenageado ? `${tipoEvento} de ${homenageado}` : tipoEvento) +
+        (idade ? ` (${idade})` : '');
+
+      const localTexto = local ? `Local: ${local}.` : '';
+
+      const convidadosTexto = qtdConvidados
+        ? `Quantidade aproximada de convidados: ${qtdConvidados}.`
+        : '';
+
+      const itensTexto = itensMarcados.length
+        ? itensMarcados.map(i => `- ${i}`).join('\n')
+        : '- Definir itens principais conforme interesse do cliente.';
+
+      const obsTexto = observacoes
+        ? `\n\nObservações/passos importantes informados pelo cliente:\n${observacoes}`
+        : '';
+
+      const textoFinal = 
+`[Proposta de cenário para ${nomeEvento}]
+
+${localTexto}
+${convidadosTexto}
+
+1) Conceito geral do cenário
+${temaTexto}
+${coresTexto}
+
+Estilo do projeto: ${estiloTexto}
+
+2) Itens previstos no cenário
+${itensTexto}
+
+3) Sobre investimento
+Nesta primeira proposta, estou considerando uma ${orcamentoTexto}
+
+O valor exato é definido após alinharmos todos os detalhes (tamanho do espaço, quantidade final de itens, tipo de flores/locação de mobiliário, etc.).
+
+4) Próximos passos
+- Ajustar tema e paleta (se necessário);
+- Confirmar lista de itens;
+- Definir data e horário;
+- Fechar o valor de acordo com o que for aprovado.
+
+${obsTexto}
+
+Qualquer detalhe que quiser alterar, me avise que ajusto o cenário para ficar exatamente como você imagina.`;
+
+      const resultadoDiv = document.getElementById('resultado');
+      resultadoDiv.style.display = 'block';
+      resultadoDiv.innerText = textoFinal;
+    }
+
+    function copiarResultado() {
+      const resultadoDiv = document.getElementById('resultado');
+      if (resultadoDiv.style.display === 'none') {
+        alert('Primeiro gere um cenário para copiar o texto.');
+        return;
+      }
+      const texto = resultadoDiv.innerText;
+      navigator.clipboard.writeText(texto).then(
+        () => alert('Texto copiado! Agora é só colar no WhatsApp ou onde quiser.'),
+        () => alert('Não foi possível copiar automaticamente. Se preferir, selecione o texto e copie manualmente.')
+      );
+    }
+  </script>
+</body>
+</html>

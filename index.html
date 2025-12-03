@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerador de Cenários para Festas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #444;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    textarea, input, select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #43a047;
+    }
+
+    .resultado {
+      margin-top: 25px;
+      background: #eef5ff;
+      padding: 20px;
+      border-left: 5px solid #4a90e2;
+      border-radius: 8px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Gerador de Cenários para Festas</h1>
+
+    <label>Nome do Cliente:</label>
+    <input type="text" id="cliente" placeholder="Ex.: Maria Silva">
+
+    <label>Tipo de Festa:</label>
+    <input type="text" id="tipo" placeholder="Ex.: Aniversário, Batizado, Casamento">
+
+    <label>Tema:</label>
+    <input type="text" id="tema" placeholder="Ex.: Minnie, Safari, Vingadores">
+
+    <label>Cores:</label>
+    <input type="text" id="cores" placeholder="Ex.: Rosa, Branco, Dourado">
+
+    <label>Itens Principais:</label>
+    <textarea id="itens" rows="4" placeholder="Ex.: Mesa, Painel, Balões, Porta-retratos"></textarea>
+
+    <button onclick="gerar()">Gerar Cenário</button>
+
+    <div id="resultado" class="resultado" style="display:none;"></div>
+  </div>
+
+<script>
+function gerar() {
+  let cliente = document.getElementById("cliente").value;
+  let tipo = document.getElementById("tipo").value;
+  let tema = document.getElementById("tema").value;
+  let cores = document.getElementById("cores").value;
+  let itens = document.getElementById("itens").value;
+
+  if (!cliente || !tipo || !tema) {
+    alert("Preencha os campos obrigatórios!");
+    return;
+  }
+
+  let texto = `
+    <h2>Cenário Gerado</h2>
+    <p><strong>Cliente:</strong> ${cliente}</p>
+    <p><strong>Tipo de Festa:</strong> ${tipo}</p>
+    <p><strong>Tema:</strong> ${tema}</p>
+    <p><strong>Cores:</strong> ${cores}</p>
+    <p><strong>Itens Principais:</strong><br>${itens.replace(/\n/g, "<br>")}</p>
+    <p style="margin-top:20px;">🎉 Cenário criado automaticamente com base nas informações preenchidas.</p>
+  `;
+
+  let box = document.getElementById("resultado");
+  box.innerHTML = texto;
+  box.style.display = "block";
+}
+</script>
+
+</body>
+</html>
